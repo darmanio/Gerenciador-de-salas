@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information including role.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name of the user." },
+        "email": { "type": "string", "format": "email", "description": "User's email address." },
+        "role": { "type": "string", "enum": ["admin", "user"], "description": "User's role in the system." },
+        "uid": { "type": "string", "description": "Unique identifier for the user." }
+      },
+      "required": ["name", "email", "role", "uid"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "Information about a bookable room.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the room." },
+        "capacity": { "type": "integer", "description": "Maximum capacity of the room." },
+        "description": { "type": "string", "description": "Room features (e.g., Projector, AC)." }
+      },
+      "required": ["name", "capacity", "description"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "A reservation for a room.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the user who made the booking." },
+        "userName": { "type": "string", "description": "Name of the user who made the booking." },
+        "roomId": { "type": "string", "description": "ID of the room being booked." },
+        "roomName": { "type": "string", "description": "Name of the room being booked." },
+        "date": { "type": "string", "format": "date", "description": "Date of the booking (YYYY-MM-DD)." },
+        "startTime": { "type": "string", "description": "Start time (HH:MM)." },
+        "endTime": { "type": "string", "description": "End time (HH:MM)." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp when the booking was created." }
+      },
+      "required": ["userId", "userName", "roomId", "roomName", "date", "startTime", "endTime", "createdAt"]
+    },
+    "ReleasedPeriod": {
+      "title": "ReleasedPeriod",
+      "description": "A month released by admin for booking.",
+      "type": "object",
+      "properties": {
+        "month": { "type": "string", "description": "The month in YYYY-MM format." },
+        "releasedBy": { "type": "string", "description": "ID of the admin who released the period." },
+        "releasedAt": { "type": "string", "format": "date-time", "description": "Timestamp when the period was released." }
+      },
+      "required": ["month", "releasedBy", "releasedAt"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Log of user actions in the system.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the user who performed the action." },
+        "userName": { "type": "string", "description": "Name of the user who performed the action." },
+        "action": { "type": "string", "enum": ["login", "logout", "book", "cancel"], "description": "The action performed." },
+        "details": { "type": "string", "description": "Additional details about the action." },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Timestamp when the action occurred." }
+      },
+      "required": ["userId", "userName", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of user profiles."
+    },
+    "/rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Collection of available rooms."
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Collection of room bookings."
+    },
+    "/releasedPeriods/{periodId}": {
+      "schema": "ReleasedPeriod",
+      "description": "Collection of released booking periods."
+    },
+    "/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Collection of user activity logs."
+    }
+  }
+}

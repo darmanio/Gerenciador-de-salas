@@ -1,0 +1,5 @@
+{
+  "name": "Sistema de Agendamento de Salas",
+  "description": "Sistema completo para agendamento de salas com autenticação, painel administrativo e controle de conflitos de horários.",
+  "requestFramePermissions": []
+}
